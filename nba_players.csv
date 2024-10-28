@@ -1,0 +1,11 @@
+first_name,last_name,position,jersey_number,height_cm,weight_kg,birthdate,nationality,team_name,city
+Stephen,Curry,Guard,30,188,84,14031988,USA,Golden State Warriors,San Francisco
+Draymond,Green,Forward,23,198,104,04031990,USA,Golden State Warriors,San Francisco
+Giannis,Antetokounmpo,Forward,34,211,110,06121994,GR,Milwaukee Bucks,Milwaukee
+Khris,Middleton,Forward,22,201,101,12081991,USA,Milwaukee Bucks,Milwaukee
+Jaylen,Brown,Forward,7,198,101,24101996,USA,Boston Celtics,Boston
+Derrick,White,Guard,9,193,86,02071994,USA,Boston Celtics,Boston
+Luka,Dončić,Guard,77,198,104,28021999,SI,Dallas Mavericks,Dallas
+Klay,Thompson,Guard,31,196,100,08021990,USA,Dallas Mavericks,Dallas
+Nikola,Jokić,Center,15,211,129,19021995,RS,Denver Nuggets,Denver
+Dario,Šarić,Forward,9,208,102,08041994,HR,Denver Nuggets,Denver
