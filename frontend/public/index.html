@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ovaj skup podataka sadrži informacije o NBA igračima i njihovim timovima, uključujući poziciju, visinu, težinu, broj dresa, ime, prezime i nacionalnost.">
+    <meta name="author" content="Ivan Džankić">
+    <title>NBA Igrači - Skup podataka</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <h1>NBA Igrači - Skup podataka</h1>
+    <p>Ovaj skup podataka sadrži informacije o NBA igračima i njihovim timovima. Svaki igrač je povezan s timom u kojem igra, a podaci uključuju informacije o poziciji, visini, težini, broju dresa, te osnovnim osobnim podacima kao što su ime, prezime i nacionalnost.</p>
+
+    <h2>Metapodaci</h2>
+    <ul>
+        <li><strong>Licenca:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0)</li>
+        <li><strong>Autor:</strong> Ivan Džankić</li>
+        <li><strong>Verzija:</strong> 1.0</li>
+        <li><strong>Jezik:</strong> Engleski</li>
+    </ul>
+
+    <h3>Atributi</h3>
+    <ul>
+        <li><strong>first_name</strong>: Ime igrača</li>
+        <li><strong>last_name</strong>: Prezime igrača</li>
+        <li><strong>position</strong>: Pozicija na kojoj igrač igra (npr. Forward, Guard)</li>
+        <li><strong>jersey_number</strong>: Broj dresa igrača</li>
+        <li><strong>height_cm</strong>: Visina igrača u centimetrima</li>
+        <li><strong>weight_kg</strong>: Težina igrača u kilogramima</li>
+        <li><strong>birthdate</strong>: Datum rođenja igrača (format: DDMMYYYY)</li>
+        <li><strong>nationality</strong>: Nacionalnost igrača</li>
+        <li><strong>team_name</strong>: Naziv tima</li>
+        <li><strong>city</strong>: Grad u kojem se tim nalazi</li>
+        <li><strong>team_id</strong>: Unikatni identifikator tima u bazi podataka</li>
+        <li><strong>player_id</strong>: Unikatni identifikator igrača u bazi podataka</li>
+    </ul>
+
+    <h3>Relacije</h3>
+    <ul>
+        <li><strong>Timovi (Roditelj):</strong> Svaki tim može imati više igrača</li>
+        <li><strong>Igrači (Dijete):</strong> Svaki igrač pripada jednom timu</li>
+    </ul>
+
+    <h3>Izvoz</h3>
+    <p>Skup podataka je dostupan u CSV i JSON formatima pomoću SQL COPY naredbe.</p>
+
+    <h3>Izvori podataka</h3>
+    <p>Podaci su nabavljeni sa službene NBA stranice.</p>
+
+    <h3>Kvaliteta podataka</h3>
+    <p><strong>Normalizacija:</strong> Podaci su normalizirani u dvije relacije (timovi i igrači) radi lakše analize i preglednosti.</p>
+
+    <h2>Preuzimanje podataka</h2>
+    <ul>
+        <li><a href="nba_players.json" download>Download JSON</a></li>
+        <li><a href="nba_players.csv" download>Download CSV</a></li>
+    </ul>
+
+    <p><a href="datatable.html">Pogledaj tablicu s podacima</a></p>
+</body>
+</html>

@@ -1,0 +1,79 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://or.fer.unizg.hr/ornba.json",
+    "type": "array",
+    "title": "NBA Igrači",
+    "description": "Skup NBA igrača i njihovih timova.",
+    "items": {
+        "type": "object",
+        "title": "Objekt koji sadrži podatke o timu",
+        "required": [
+            "Naziv",
+            "Grad",
+            "Igrači"
+        ],
+        "properties": {
+            "Naziv": {
+                "type": "string",
+                "title": "Naziv tima"
+            },
+            "Grad": {
+                "type": "string",
+                "title": "Grad tima"
+            },
+            "Igrači": {
+                "type": "array",
+                "title": "Array s igračima",
+                "items": {
+                    "type": "object",
+                    "title": "Objekt koji sadrži podatke o igraču",
+                    "required": [
+                        "Ime",
+                        "Prezime",
+                        "Pozicija",
+                        "Broj_dresa",
+                        "Visina",
+                        "Težina",
+                        "Datum_rođenja",
+                        "Nacionalnost"
+                    ],
+                    "properties": {
+                        "Ime": {
+                            "type": "string",
+                            "title": "Ime"
+                        },
+                        "Prezime": {
+                            "type": "string",
+                            "title": "Prezime"
+                        },
+                        "Pozicija": {
+                            "type": "string",
+                            "title": "Pozicija"
+                        },
+                        "Broj_dresa": {
+                            "type": "integer",
+                            "title": "Broj dresa"
+                        },
+                        "Visina": {
+                            "type": "integer",
+                            "title": "Visina"
+                        },
+                        "Težina": {
+                            "type": "integer",
+                            "title": "Težina"
+                        },
+                        "Datum_rođenja": {
+                            "type": "string",
+                            "title": "Datum rođenja"
+                        },
+                        "Nacionalnost": {
+                            "type": "string",
+                            "title": "Nacionalnost"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+  

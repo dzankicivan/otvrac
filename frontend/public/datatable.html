@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NBA Players Table</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/tablescript.js"></script>
+</head>
+<body>
+    <h1>NBA Players Table</h1>
+
+    <form id="filter-form" onsubmit="applyFilter(); return false;">
+        <input type="text" id="filter-input" placeholder="Enter search value">
+        <select id="field-select">
+            <option value="all">All Fields (Wildcard)</option>
+            <option value="first_name">Ime</option>
+            <option value="last_name">Prezime</option>
+            <option value="position">Pozicija</option>
+            <option value="jersey_number">Broj dresa</option>
+            <option value="height_cm">Visina (cm)</option>
+            <option value="weight_kg">Težina (kg)</option>
+            <option value="birth_date">Datum rođenja</option>
+            <option value="nationality">Nacionalnost</option>
+            <option value="team">Tim</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="download-buttons">
+    <button onclick="downloadData('json')">Download JSON</button>
+    <button onclick="downloadData('csv')">Download CSV</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Pozicija</th>
+                <th>Broj dresa</th>
+                <th>Visina (cm)</th>
+                <th>Težina (kg)</th>
+                <th>Datum rođenja</th>
+                <th>Nacionalnost</th>
+                <th>Tim</th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+</body>
+</html>
+
+
