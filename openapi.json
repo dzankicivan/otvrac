@@ -1,0 +1,362 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "NBA Players API",
+        "version": "1.0.0",
+        "description": "API for NBA players data",
+        "contact": {
+            "name": "Ivan Džankić",
+            "email": "id54892@fer.unizg.hr"
+        },
+        "license": {
+            "name": "Creative Commons Attribution 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+        }
+    },
+    "paths": {
+        "/api/players": {
+            "get": {
+                "summary": "Get all players",
+                "description": "Returns a list of all players",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search term",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "field",
+                        "in": "query",
+                        "description": "Field to search in",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fetched all players",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Player"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add a new player",
+                "description": "Adds a new player to the database",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Player"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Player added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Player"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Unimplemented HTTP method",
+                "description": "Returns a 501 status code",
+                "responses": {
+                    "501": {
+                        "description": "Method not implemented for requested resource"
+                    }
+                }
+            }
+        },
+        "/api/players/{id}": {
+            "get": {
+                "summary": "Get a player by ID",
+                "description": "Returns a single player by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Player ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fetched player",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Player"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Player not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a player by ID",
+                "description": "Updates a player's details by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Player ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Player"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Player updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Player"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Player not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a player by ID",
+                "description": "Deletes a player by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Player ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Player deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Player"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Player not found"
+                    }
+                }
+            }
+        },
+        "/api/players/team/{team}": {
+            "get": {
+                "summary": "Get players by team",
+                "description": "Returns a list of players by team",
+                "parameters": [
+                    {
+                        "name": "team",
+                        "in": "path",
+                        "description": "Team name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fetched players by team",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Player"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Team not found"
+                    }
+                }
+            }
+        },
+        "/api/players/position/{position}": {
+            "get": {
+                "summary": "Get players by position",
+                "description": "Returns a list of players by position",
+                "parameters": [
+                    {
+                        "name": "position",
+                        "in": "path",
+                        "description": "Player position",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fetched players by position",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Player"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Position not found"
+                    }
+                }
+            }
+        },
+        "/api/players/nationality/{nationality}": {
+            "get": {
+                "summary": "Get players by nationality",
+                "description": "Returns a list of players by nationality",
+                "parameters": [
+                    {
+                        "name": "nationality",
+                        "in": "path",
+                        "description": "Player nationality",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fetched players by nationality",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Player"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nationality not found"
+                    }
+                }
+            }
+        },
+        "/api/openapi": {
+            "get": {
+                "summary": "Returns the OpenAPI specification",
+                "description": "Returns the OpenAPI specification",
+                "responses": {
+                    "200": {
+                        "description": "OpenAPI specification",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Player": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": "string"
+                    },
+                    "jersey_number": {
+                        "type": "integer"
+                    },
+                    "height_cm": {
+                        "type": "integer"
+                    },
+                    "weight_kg": {
+                        "type": "integer"
+                    },
+                    "birthdate": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "nationality": {
+                        "type": "string"
+                    },
+                    "team_id": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}
