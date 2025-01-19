@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
+    <nav id="nav">
+        <a href="/login" id="login-link" class="button">Prijava</a>
+        <a href="/profile" id="profile-link" class="button" style="display: none;">Korisnički profil</a>
+        <a href="/refresh-data" id="refresh-link" class="button" style="display: none;">Osvježi preslike</a>
+        <a href="/logout" id="logout-link" class="button" style="display: none;">Odjava</a>
+    </nav>
     <h1>NBA Igrači - Skup podataka</h1>
     <p>Ovaj skup podataka sadrži informacije o NBA igračima i njihovim timovima. Svaki igrač je povezan s timom u kojem igra, a podaci uključuju informacije o poziciji, visini, težini, broju dresa, te osnovnim osobnim podacima kao što su ime, prezime i nacionalnost.</p>
 
@@ -57,5 +63,21 @@
     </ul>
 
     <p><a href="datatable.html">Pogledaj tablicu s podacima</a></p>
+
+    <script>
+        // Check if user is authenticated
+        fetch('/profile')
+            .then(response => {
+                if (response.status === 200) {
+                    document.getElementById('login-link').style.display = 'none';
+                    document.getElementById('profile-link').style.display = 'inline';
+                    document.getElementById('refresh-link').style.display = 'inline';
+                    document.getElementById('logout-link').style.display = 'inline';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
 </body>
 </html>

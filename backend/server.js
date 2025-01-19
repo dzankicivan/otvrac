@@ -5,11 +5,42 @@ const PORT = 3000;
 const path = require('path');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+const session = require('express-session');
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
 
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
+
+const authConfig = {
+    domain: 'dev-4xulpas5e31zerum.eu.auth0.com',
+    clientID: 'GSzLjJH21kvu8WLwbIGcjA83yoFf3thI',
+    clientSecret: 'lhpsxY9EKbHo4DtmcPJHBwrh_L8V090hYNqXODw9UapXhsm7UWYRofJBBLn0mLi9',
+    callbackURL: 'http://localhost:3000/callback'
+};
+
+passport.use(new Auth0Strategy(authConfig, (accessToken, refreshToken, extraParams, profile, done) => {
+    return done(null, profile);
+}));
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+    done(null, user);
+});
+
+app.use(session({
+    secret: '72BA13F487CBDC7F9EC1CB9AED9C1',
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const swaggerOptions = {
     swaggerDefinition: {
@@ -42,6 +73,96 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.get('/', (req, res) => {
     res.redirect('/index.html'); 
 });
+
+/*app.get('/login', (req, res, next) => {
+    passport.authenticate('auth0', {
+        scope: 'openid email profile',
+        prompt: 'login'
+    })(req, res, next);
+}, (req, res) => {
+    res.redirect('/');
+});*/
+
+app.get('/login', passport.authenticate('auth0', {
+    scope: 'openid email profile'
+}), (req, res) => {
+    res.redirect('/');
+});
+
+app.get('/callback', passport.authenticate('auth0', {
+    failureRedirect: '/'
+}), (req, res) => {
+    res.redirect('/');
+});
+
+app.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) { 
+            return next(err); 
+        }
+        res.redirect('/');
+    });
+});
+
+app.get('/profile', (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(401).json({
+            status: "Unauthorized",
+            message: "User not authenticated",
+            response: null
+        });
+    }
+    res.json({
+        status: "OK",
+        message: "User profile",
+        response: req.user
+    });
+});
+
+const fs = require('fs');
+
+app.get('/refresh-data', async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                players.first_name, 
+                players.last_name, 
+                players.position, 
+                players.jersey_number, 
+                players.height_cm, 
+                players.weight_kg, 
+                TO_CHAR(players.birthdate, 'DD.MM.YYYY') AS birth_date, 
+                players.nationality, 
+                teams.team_name AS team 
+            FROM players 
+            JOIN teams ON players.team_id = teams.id`;
+        
+        const result = await pool.query(query);
+        const data = result.rows;
+
+        const jsonFilePath = path.join(__dirname, '../frontend/public/nba_players.json');
+        fs.writeFileSync(jsonFilePath, JSON.stringify(data, null, 2));
+
+        const csvData = convertToCSV(data);
+        const csvFilePath = path.join(__dirname, '../frontend/public/nba_players.csv');
+        fs.writeFileSync(csvFilePath, csvData);
+
+        res.json({
+            status: "OK",
+            message: "Preslike uspješno osvježene",
+            response: null
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: "Error",
+            message: "Osvježavanje preslika nije uspjelo",
+            response: null
+        });
+    }
+});
+
+
 
 /**
  * @swagger
@@ -111,16 +232,34 @@ app.get('/api/players', async (req, res) => {
 
     try {
         const result = await pool.query(query, params);
+        const data = result.rows.map(player => ({
+            "@context": {
+                "@vocab": "http://schema.org/",
+                "first_name": "givenName",
+                "last_name": "familyName"
+            },
+            "@type": "Person",
+            "first_name": player.first_name,
+            "last_name": player.last_name,
+            "position": player.position,
+            "jersey_number": player.jersey_number,
+            "height_cm": player.height_cm,
+            "weight_kg": player.weight_kg,
+            "birth_date": player.birth_date,
+            "nationality": player.nationality,
+            "team": player.team
+        }));
+
         res.json({
             status: "OK",
-            message: "Fetched all players",
-            response: result.rows
+            message: "Dohvatio sve igrače",
+            response: data
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({
             status: "Error",
-            message: "Database query error",
+            message: "Pogreška",
             response: null
         });
     }

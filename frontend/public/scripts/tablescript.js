@@ -4,7 +4,7 @@ async function fetchData(filter = '', field = '') {
     const response = await fetch(`/api/players?search=${filter}&field=${field}`);
     const data = await response.json();
     const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = data.map(player => `
+    tableBody.innerHTML = data.response.map(player => `
         <tr>
             <td>${player.first_name}</td>
             <td>${player.last_name}</td>
