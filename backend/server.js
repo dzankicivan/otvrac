@@ -112,6 +112,17 @@ app.get('/profile', (req, res) => {
             response: null
         });
     }
+    res.sendFile(path.join(__dirname, '../frontend/public/profile.html'));
+});
+
+app.get('/profile/data', (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(401).json({
+            status: "Unauthorized",
+            message: "User not authenticated",
+            response: null
+        });
+    }
     res.json({
         status: "OK",
         message: "User profile",

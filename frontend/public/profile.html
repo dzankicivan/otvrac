@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Korisnički profil</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <nav id="nav">
+        <a href="/login" id="login-link" class="button" style="display: none;">Prijava</a>
+        <a href="/profile" id="profile-link" class="button">Korisnički profil</a>
+        <a href="/refresh-data" id="refresh-link" class="button" style="display: none;">Osvježi preslike</a>
+        <a href="/logout" id="logout-link" class="button">Odjava</a>
+    </nav>
+    <h1>Korisnički profil</h1>
+    <div id="profile-data">
+    </div>
+    <script>
+        fetch('/profile/data')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "OK") {
+                    const profileData = document.getElementById('profile-data');
+                    const user = data.response;
+                    profileData.innerHTML = `
+                        <img src="${user.picture}" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%;">
+                        <p><strong>Ime:</strong> ${user.nickname}</p>
+                        <p><strong>Email:</strong> ${user.emails[0].value}</p>
+                        <p><strong>ID:</strong> ${user.id}</p>
+                        <p><strong>Provider:</strong> ${user.provider}</p>
+                        <p><strong>Updated At:</strong> ${user._json.updated_at}</p>
+                        <p><strong>Email Verified:</strong> ${user._json.email_verified}</p>
+                    `;
+                } else {
+                    document.getElementById('profile-data').innerHTML = '<p>Greška prilikom dohvaćanja podataka.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('profile-data').innerHTML = '<p>Greška prilikom dohvaćanja podataka.</p>';
+            });
+    </script>
+</body>
+</html>
